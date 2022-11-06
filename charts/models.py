@@ -13,6 +13,17 @@ class Ticker(models.Model):
     industry = models.CharField(max_length=25)
     sector = models.CharField(max_length=25)
     description = models.CharField(max_length=250)
+
+class Chart(models.Model):
+    ticker = models.ForeignKey(Ticker, on_delete=models.CASCADE)
+    is_active = models.BooleanField()
+    name = models.CharField(max_length=50)
+    start_date = models.DateField()
+    end_date = models.DateField()
+    bg_color = models.CharField(max_length=25)
+    curve_color = models.CharField(max_length=25)
+
+
     
 
 
