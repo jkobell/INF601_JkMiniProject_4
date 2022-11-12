@@ -24,8 +24,8 @@ class Exchange(models.Model):
     market_id = models.CharField(max_length=25)
     country = models.CharField(max_length=25)
     country_code = models.CharField(max_length=25)
-    city = models.CharField(max_length=25)
-    website = models.CharField(max_length=25)
+    city = models.CharField(max_length=50)
+    website = models.CharField(max_length=50)
 
     def __str__(self):
         return 'Exchange: ' + self.name
