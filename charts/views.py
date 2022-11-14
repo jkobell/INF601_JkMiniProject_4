@@ -1,11 +1,56 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.http import Http404
-from django.http import HttpResponse
-from django.template import loader
+from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
+from django.contrib import messages
+from django.contrib.auth import login, authenticate, logout
+from django.views.decorators.cache import never_cache
 from .models import Exchange
 from .models import Currency
 from .models import Ticker
 
+@never_cache
+def register(request):
+    if request.method == 'POST':
+        form = UserCreationForm(request.POST)
+        if form.is_valid():
+            form.save()
+            messages.success(request, f'Registration successful. Please log in.')    
+            return redirect('login_request')
+        #else: 
+           # messages.error(request, f'is form valid: {form.is_valid()}') #uncomment to see if form is valid 
+    else:
+        if request.user.is_authenticated:
+            logout(request)
+    form = UserCreationForm()
+    context = {'form': form}
+    return render(request, 'charts/register.html', context)
+
+@never_cache
+def login_request(request):
+    if request.method == "POST":
+        form = AuthenticationForm(request, data=request.POST)
+        if form.is_valid():
+            username = form.cleaned_data.get('username')
+            password = form.cleaned_data.get('password')
+            user = authenticate(username=username, password=password)
+            if user is not None:
+                login(request, user)
+                #messages.info(request, f"You are now logged in as {username}.")
+                return redirect('index')
+            else:
+                messages.error(request,"Invalid username or password.")
+        else:
+            messages.error(request,"Invalid username or password.")
+    form = AuthenticationForm()
+    context = {'form': form}
+    return render(request, 'charts/login.html', context)
+
+@never_cache
+def logout_request(request):    
+    logout(request)
+    #messages.info(request, f"You are now logged out.")
+    return redirect('index')
+            
 #index list view
 def index(request):
     pages_list = ['exchange', 'currency', 'ticker']

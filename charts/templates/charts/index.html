@@ -12,15 +12,16 @@
   <article class="ms-5 mt-1">
     {% if pages_list %}
     <div class="d-flex justify-content-center">
+        {% if user.is_authenticated %}
         <ul class="bg-secondary bg-opacity-25 px-5 py-3">
-            {% for page in pages_list %}
-                <!-- <li class="fs-4 py-2 text-capitalize"><a href="/charts/{{ page }}/">{{ page }}</a></li> -->
-                
+            {% for page in pages_list %}                
                 <li class="fs-4 py-2 text-capitalize"><a href="{% url page %}">{{ page }}</a></li>
             {% endfor %}
         </ul>
-    </div>
-    
+        {% else %}
+        <h3>Please log in to access content.</h3>
+        {% endif %}
+    </div>    
     {% else %}
         <p>No Exchanges are available.</p>
     {% endif %}

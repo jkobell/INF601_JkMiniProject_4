@@ -7,8 +7,17 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js"></script>
 <nav class="navbar navbar-expand-sm bg-secondary bg-opacity-25 mt-3">  
   <h1 class="ms-5 text-primary text-nowrap">Financial Ticker</h1>
-  
-  
+  <div class="nav container-fluid col-md-8 me-1 justify-content-end">
+    <ul class="navbar-nav me-4">
+      {% if user.is_authenticated %}
+      <li class="nav-item"><a class="nav-link disabled text-black">Welcome: {{ user.username }}</a>
+      <li class="nav-item"><a class="nav-link text-primary" href="{% url 'logout_request' %}">Log Out</a>
+      {% else %}
+      <li class="nav-item"><a class="nav-link text-primary" href="{% url 'login_request' %}">Log In</a> 
+      <li class="nav-item"><a class="nav-link text-primary" href="{% url 'register' %}">Register</a>            
+      {% endif %}
+    </ul>
+  </div>
 </nav>
 <section class="content">
   <header>
