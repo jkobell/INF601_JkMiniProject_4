@@ -1,3 +1,6 @@
+# INF601 - Advanced Programming in Python
+# James Kobell
+# Mini Project 4
 """
 Django settings for fin_ticker project.
 
@@ -27,10 +30,10 @@ SECRET_KEY = 'place-key-here'
 DEBUG = True
 #DEBUG = False
 
-#if localhost and DEBUG=True
+#if localhost and DEBUG=False
 #ALLOWED_HOSTS = ['localhost', '127.0.0.1',]
 
-#if DEBUG=False
+#if DEBUG=True
 ALLOWED_HOSTS = []
 
 
@@ -129,6 +132,6 @@ STATIC_URL = 'static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-SESSION_EXPIRE_AT_BROWSER_CLOSE = True
+SESSION_EXPIRE_AT_BROWSER_CLOSE = True #best policy
 
-SESSION_COOKIE_AGE = 86400
+SESSION_COOKIE_AGE = 86400 #24 hours 

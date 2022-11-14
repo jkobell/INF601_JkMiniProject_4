@@ -1,3 +1,6 @@
+# INF601 - Advanced Programming in Python
+# James Kobell
+# Mini Project 4
 from django.shortcuts import render, redirect
 from django.http import Http404
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
@@ -9,15 +12,15 @@ from .models import Currency
 from .models import Ticker
 
 @never_cache
-def register(request):
+def register(request): # user register form
     if request.method == 'POST':
-        form = UserCreationForm(request.POST)
+        form = UserCreationForm(request.POST) # username, password1, password2
         if form.is_valid():
             form.save()
             messages.success(request, f'Registration successful. Please log in.')    
             return redirect('login_request')
         #else: 
-           # messages.error(request, f'is form valid: {form.is_valid()}') #uncomment to see if form is valid 
+           # messages.error(request, f'is form valid: {form.is_valid()}') #uncomment to debug if form is valid 
     else:
         if request.user.is_authenticated:
             logout(request)
@@ -26,16 +29,16 @@ def register(request):
     return render(request, 'charts/register.html', context)
 
 @never_cache
-def login_request(request):
+def login_request(request): #login form
     if request.method == "POST":
-        form = AuthenticationForm(request, data=request.POST)
+        form = AuthenticationForm(request, data=request.POST) # username, password
         if form.is_valid():
             username = form.cleaned_data.get('username')
             password = form.cleaned_data.get('password')
             user = authenticate(username=username, password=password)
             if user is not None:
                 login(request, user)
-                #messages.info(request, f"You are now logged in as {username}.")
+                #messages.info(request, f"You are now logged in as {username}.") #uncomment to debug
                 return redirect('index')
             else:
                 messages.error(request,"Invalid username or password.")
@@ -46,15 +49,15 @@ def login_request(request):
     return render(request, 'charts/login.html', context)
 
 @never_cache
-def logout_request(request):    
-    logout(request)
-    #messages.info(request, f"You are now logged out.")
+def logout_request(request):     
+    logout(request) #flushes Session
+    #messages.info(request, f"You are now logged out.") #uncomment to debug
     return redirect('index')
             
 #index list view
 def index(request):
-    pages_list = ['exchange', 'currency', 'ticker']
-    context = {
+    pages_list = ['exchange', 'currency', 'ticker'] #todo - move to model
+    context = { #params: page name, list of links
         'page_name': 'Site Index',
         'pages_list': pages_list,
     }
@@ -63,7 +66,7 @@ def index(request):
 def exchange(request):
     try:
         exchange_list = Exchange.objects.all()
-        context = {
+        context = { #params: all records in Exchange table, page name, url name 
             'exchange_list': exchange_list,
             'page_name': 'Available Exchanges',
             'exchange_detail': 'exchange_detail',
@@ -76,7 +79,7 @@ def exchange(request):
 def exchange_detail(request, exchange_id):
     try:
         exchange_content = Exchange.objects.filter(id=exchange_id)
-        context = {
+        context = { #params: iterable record, page name
             'exchange_content': exchange_content,
             'page_name': 'Exchange Details',
         }
@@ -87,7 +90,7 @@ def exchange_detail(request, exchange_id):
 def currency(request):
     try:
         currency_list = Currency.objects.all()
-        context = {
+        context = {#params: all records in Currency table, page name, url name 
             'currency_list': currency_list,
             'page_name': 'Available Currencies',
             'currency_detail': 'currency_detail',
@@ -99,7 +102,7 @@ def currency(request):
 def currency_detail(request, currency_id):
     try:
         currency_content = Currency.objects.filter(id=currency_id)
-        context = {
+        context = {#params: iterable record, page name
             'currency_content': currency_content,
             'page_name': 'Currency Details',
         }
@@ -110,7 +113,7 @@ def currency_detail(request, currency_id):
 def ticker(request):
     try:
         ticker_list = Ticker.objects.all()
-        context = {
+        context = {#params: all records in Ticker table, page name, url name 
             'ticker_list': ticker_list,
             'page_name': 'Available Tickers',
             'ticker_detail': 'ticker_detail',
@@ -122,7 +125,7 @@ def ticker(request):
 def ticker_detail(request, ticker_id):
     try:
         ticker_content = Ticker.objects.filter(id=ticker_id)
-        context = {
+        context = {#params: iterable record, page name
             'ticker_content': ticker_content,
             'page_name': 'Ticker Details',
         }

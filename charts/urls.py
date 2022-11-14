@@ -1,7 +1,11 @@
+# INF601 - Advanced Programming in Python
+# James Kobell
+# Mini Project 4
 from django.urls import include, path
 
 from . import views
 
+# register url and create function before use
 urlpatterns = [    
     path('', views.index, name='index'),
     path('exchange/', views.exchange, name='exchange'),

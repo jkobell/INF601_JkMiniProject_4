@@ -1,10 +1,13 @@
+# INF601 - Advanced Programming in Python
+# James Kobell
+# Mini Project 4
 #!/usr/bin/env python
 """Django's command-line utility for administrative tasks."""
 import os
 import sys
 
 
-def main():
+def main(): #starts project in server
     """Run administrative tasks."""
     os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'fin_ticker.settings')
     try:

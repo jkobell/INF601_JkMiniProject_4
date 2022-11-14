@@ -1,3 +1,6 @@
+# INF601 - Advanced Programming in Python
+# James Kobell
+# Mini Project 4
 """fin_ticker URL Configuration
 
 The `urlpatterns` list routes URLs to views. For more information please see:
@@ -16,6 +19,7 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import include, path
 
+#site entry urls
 urlpatterns = [
     path('charts/', include('charts.urls')),
     path('admin/', admin.site.urls),
