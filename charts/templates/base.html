@@ -11,7 +11,7 @@
     <ul class="navbar-nav me-4">
       {% if user.is_authenticated %}
       <li class="nav-item"><a class="nav-link disabled text-black">Welcome: {{ user.username }}</a>
-      <li class="nav-item"><a class="nav-link text-primary" href="{% url 'logout_request' %}">Log Out</a>
+      <li class="nav-item"><a class="nav-link text-primary" href="{% url 'logout_request' %}" data-bs-toggle="modal" data-bs-target="#logoutModal">Log Out</a>
       {% else %}
       <li class="nav-item"><a class="nav-link text-primary" href="{% url 'login_request' %}">Log In</a> 
       <li class="nav-item"><a class="nav-link text-primary" href="{% url 'register' %}">Register</a>            
@@ -19,6 +19,26 @@
     </ul>
   </div>
 </nav>
+<div class="modal fade" id="logoutModal" tabindex="-1" aria-labelledby="logoutModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="logoutModalLabel">You about to log out.</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <ul>
+          <li>Click <b>Cancel</b> to remain logged in.</li>
+          <li>Click <b>Logout</b> to continue logging out.</li>
+        </ul>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+        <button onclick="location.href=`{% url 'logout_request' %}`" type="button" class="btn btn-primary">Logout</button>
+      </div>
+    </div>
+  </div>
+</div>
 <section class="content">
   <header>
     {% block header %}{% endblock %}
