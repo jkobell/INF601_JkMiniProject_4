@@ -30,6 +30,7 @@ Python 3.10.6
 - In Terminal, run command: python manage.py migrate
 
 ### Create Charts App
+- In Terminal, run command: python manage.py startapp charts
 - In Terminal, run command: python manage.py makemigrations charts 
 - In Terminal, run command: python manage.py migrate
 
